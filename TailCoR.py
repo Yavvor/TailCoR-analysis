@@ -77,9 +77,9 @@ def compute_log_returns(dfs):
     returns_df = df_all.pivot_table(index="Date", columns="Name", values="LogReturn", aggfunc="mean")
     return returns_df
 
-# ============================================================== TAILCORR ===========================================================
+# ============================================================== TAILCOR ===========================================================
 
-def TailCorr(df, zeta=ZETA, tau=TAU, mode="tailcor"):
+def TailCoR(df, zeta=ZETA, tau=TAU, mode="tailcor"):
     """
     Computes TailCoR (or its components) correlation matrix for a given DataFrame of log returns.
 
@@ -187,9 +187,9 @@ def compute_TailCor_pairs(file_dfs, zeta=ZETA, tau=TAU):
         combined = pd.concat([df1, df2], ignore_index=True)
         returns_df = compute_log_returns([combined])
 
-        tailcor_matrix = TailCorr(returns_df, zeta, tau, mode="tailcor")
-        linear_matrix = TailCorr(returns_df, zeta, tau, mode="linear")
-        nonlinear_matrix = TailCorr(returns_df, zeta, tau, mode="nonlinear")
+        tailcor_matrix = TailCoR(returns_df, zeta, tau, mode="tailcor")
+        linear_matrix = TailCoR(returns_df, zeta, tau, mode="linear")
+        nonlinear_matrix = TailCoR(returns_df, zeta, tau, mode="nonlinear")
 
         results.append({
             "zip1": name1,
@@ -279,9 +279,9 @@ def avg_TailCor(df_returns, window_size=WINDOW_SIZE, step=STEP, zeta=ZETA, tau=T
             print(f"Skipped window {window_count}/{total_windows} – too few instruments ({window_returns.shape[1]})")
             continue
 
-        tailcor_matrix = TailCorr(window_returns, zeta, tau, mode="tailcor")
-        linear_matrix = TailCorr(window_returns, zeta, tau, mode="linear")
-        nonlinear_matrix = TailCorr(window_returns, zeta, tau, mode="nonlinear")
+        tailcor_matrix = TailCoR(window_returns, zeta, tau, mode="tailcor")
+        linear_matrix = TailCoR(window_returns, zeta, tau, mode="linear")
+        nonlinear_matrix = TailCoR(window_returns, zeta, tau, mode="nonlinear")
 
         mask = np.triu(np.ones(tailcor_matrix.shape), k=1).astype(bool)
 
